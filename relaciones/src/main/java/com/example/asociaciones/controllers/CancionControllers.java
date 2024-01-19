@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CancionControllers {
-    @RestController
+   @RestController
     @RequestMapping("/api/products")
     public class ProductController {
 
@@ -35,7 +35,7 @@ public class CancionControllers {
         }
 
         @PostMapping
-        public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult result){
+        public ResponseEntity<?> create(@Valid @RequestBody Cancion product, BindingResult result){
             if (result.hasFieldErrors()){
                 return validation(result);
             }
@@ -43,11 +43,11 @@ public class CancionControllers {
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Product product, BindingResult result){
+        public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Cancion product, BindingResult result){
             if (result.hasFieldErrors()){
                 return validation(result);
             }
-            Optional <Product> productOptional = cancionService.update(id, product);
+            Optional <Cancion> productOptional = cancionService.update(id, product);
             if(productOptional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
             }
@@ -55,8 +55,8 @@ public class CancionControllers {
         }
 
         @DeleteMapping("/{id}")
-        public ResponseEntity<Product> delete(@PathVariable Long id){
-            Optional<Product> productOptional = cancionService.delete(id);
+        public ResponseEntity<Cancion> delete(@PathVariable Long id){
+            Optional<Cancion> productOptional = cancionService.delete(id);
             if(productOptional.isPresent()){
                 return ResponseEntity.ok(productOptional.orElseThrow());
             }

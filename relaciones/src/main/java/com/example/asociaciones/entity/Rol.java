@@ -17,10 +17,9 @@ public class Rol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private String rol;
+    @Column(unique = true)
+    private String name;
 
-    @OneToMany(mappedBy = "rol")
-    private List<Usuario> usuarios = new ArrayList<>();
 }

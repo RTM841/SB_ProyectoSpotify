@@ -20,14 +20,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nombre;
-    private String Apellidos;
-    private Date fechaNacimiento;
-    private int oyentes;
+    private String nombreUsuario;
+    private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "id_rol", foreignKey = @ForeignKey(name = "fk_usuario_rol"))
-    private Rol rol;
+    @ManyToMany
+    @JoinTable(name ="users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name ="rol_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "rol_id"})}
+    )
+    private List<Rol> roles;
 
     @ManyToMany
     @JoinTable(name = "usuario_cancion",

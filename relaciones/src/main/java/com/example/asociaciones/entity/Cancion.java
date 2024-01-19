@@ -24,8 +24,6 @@ public class Cancion {
     private Date fechaCreación;
     private String artistas;
 
-    @ManyToMany(mappedBy = "canciones")
-    private List<Usuario> usuarios = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "cancion_genero",

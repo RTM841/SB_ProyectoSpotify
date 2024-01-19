@@ -22,8 +22,5 @@ public class Genero {
 
     private String Nombre;
 
-    @ManyToMany(mappedBy = "generos")
-    private List<Cancion> canciones = new ArrayList<>();
-
 
 }
