@@ -5,18 +5,16 @@ import com.example.asociaciones.services.CancionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+
+@RestController
+@RequestMapping("/api/canciones")
 public class CancionControllers {
-   @RestController
-    @RequestMapping("/api/products")
-    public class ProductController {
 
         @Autowired
         private CancionService cancionService;
@@ -35,18 +33,12 @@ public class CancionControllers {
         }
 
         @PostMapping
-        public ResponseEntity<?> create(@Valid @RequestBody Cancion product, BindingResult result){
-            if (result.hasFieldErrors()){
-                return validation(result);
-            }
-            return ResponseEntity.status(HttpStatus.CREATED).body(cancionService.save(product));
+        public ResponseEntity<Cancion> create(@RequestBody Cancion cancion){
+            return ResponseEntity.status(HttpStatus.CREATED).body(cancionService.save(cancion));
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Cancion product, BindingResult result){
-            if (result.hasFieldErrors()){
-                return validation(result);
-            }
+        public ResponseEntity<Cancion> update(@PathVariable Long id, @RequestBody Cancion product){
             Optional <Cancion> productOptional = cancionService.update(id, product);
             if(productOptional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
@@ -63,15 +55,5 @@ public class CancionControllers {
             return ResponseEntity.notFound().build();
         }
 
-        private ResponseEntity<?> validation(BindingResult result){
-            Map<String, String> errors = new HashMap<>();
-
-            result.getFieldErrors().forEach(err ->{
-                errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
-            });
-            return ResponseEntity.badRequest().body(errors);
-        }
-
-
     }
-}
+
