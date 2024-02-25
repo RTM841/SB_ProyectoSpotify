@@ -36,13 +36,15 @@ public class SpringSecurityConfig {
 
         return http.authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/{username}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/users/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/canciones").hasAnyRole("ADMIN", "ARTISTA")
                         .requestMatchers(HttpMethod.GET, "/api/canciones", "/api/canciones/{id}").hasAnyRole("ADMIN", "USER", "ARTISTA")
-                        .requestMatchers(HttpMethod.PUT, "/api/canciones/{id}").hasAnyRole("ADMIN", "ARTISTA")
-                        .requestMatchers(HttpMethod.DELETE, "/api/canciones/{id}").hasAnyRole("ADMIN", "ARTISTA")
+                        .requestMatchers(HttpMethod.GET, "/api/users/betweenDates").hasAnyRole("ADMIN", "USER", "ARTISTA")
+                        .requestMatchers(HttpMethod.PUT, "/api/canciones/{id}").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/canciones/{id}").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/generos").hasAnyRole("ADMIN", "ARTISTA")
                         .requestMatchers(HttpMethod.GET, "/api/generos", "/api/generos/{id}").hasAnyRole("ADMIN", "USER", "ARTISTA")
                         .requestMatchers(HttpMethod.PUT, "/api/generos/{id}").hasAnyRole("ADMIN")

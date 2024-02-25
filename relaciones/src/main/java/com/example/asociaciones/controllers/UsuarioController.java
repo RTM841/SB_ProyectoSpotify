@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +38,6 @@ public class UsuarioController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody Usuario usuario, BindingResult result){
-
-
         return create(usuario, result);
     }
 
@@ -49,5 +49,25 @@ public class UsuarioController {
         result.getFieldErrors().forEach(err -> errors.put(err.getField(), "El campo "+ err.getField()+ " "+ err.getDefaultMessage()));
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
+        UserDetails userDetails;
+        try {
+            userDetails = usuarioService.loadUserByUsername(username);
+        } catch (UsernameNotFoundException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+
+        // Aquí puedes devolver los detalles del usuario como una respuesta
+        // Por ejemplo, puedes devolver solo el nombre de usuario por ahora
+        Map<String, String> userResponse = new HashMap<>();
+        userResponse.put("username", userDetails.getUsername());
+        return ResponseEntity.ok(userResponse);
+    }
+
+
 
 }

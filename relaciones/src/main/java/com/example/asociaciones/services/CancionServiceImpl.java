@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,11 @@ public class CancionServiceImpl implements CancionService{
     @Override
     @Transactional(readOnly = true)
     public List<Cancion> findAll() {return cancionRepository.findAll();}
+
+    @Override
+    public List<Cancion> findByFechaCreaciónBetween(Date fechaIni, Date fechaFin) {
+        return cancionRepository.findByFechaCreaciónBetween(fechaIni, fechaFin);
+    }
 
     @Override
     @Transactional(readOnly = true)

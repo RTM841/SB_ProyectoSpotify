@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-233.13135.103">
-    <data-source name="@Spotify" uuid="71fc5882-4c18-4f0f-bff6-07ba80e8df88">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
-      <schema-mapping />
-    </data-source>
-    <data-source name="@localhost" uuid="63d8fe1a-1ce4-4ef4-8485-176c6ce8e9b9">
-      <database-info product="MySQL" version="5.5.5-10.4.28-MariaDB" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MARIADB" exact-version="10.4.28" exact-driver-version="8.0">
+  <component name="dataSourceStorageLocal" created-in="IU-233.14475.28">
+    <data-source name="@localhost" uuid="2009d9dd-64d4-4850-82de-0343290d143a">
+      <database-info product="MySQL" version="5.5.5-10.4.27-MariaDB" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MARIADB" exact-version="10.4.27" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
         <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
@@ -18,7 +14,7 @@
         <introspection-scope>
           <node kind="schema">
             <name qname="@" />
-            <name qname="spring_data_jpa_asociaciones1" />
+            <name qname="spring_data_jpa_spotify" />
           </node>
         </introspection-scope>
       </schema-mapping>

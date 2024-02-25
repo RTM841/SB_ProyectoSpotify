@@ -1,6 +1,7 @@
 package com.example.asociaciones.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,13 @@ public class Cancion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String nombre;
+
+    @Temporal(TemporalType.DATE)
     private Date fechaCreación;
+
+    @NotBlank
     private String artistas;
 
 
