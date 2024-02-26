@@ -26,6 +26,11 @@ public class CancionServiceImpl implements CancionService{
     }
 
     @Override
+    public List<Cancion> findCancionByNombre(String nombre) {
+        return cancionRepository.findCancionByNombre(nombre);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<Cancion> findById(Long id) {return cancionRepository.findById(id);}
 
@@ -56,4 +61,15 @@ public class CancionServiceImpl implements CancionService{
         cancionOptional.ifPresent( canionDb -> cancionRepository.delete(canionDb));
         return cancionOptional;
     }
+
+
+    public List<Cancion> findByGeneroNombre(String Nombre) {
+        return cancionRepository.findByGeneroNombre(Nombre);
+    }
+
+    public List<Cancion> findByFechaCreación() {
+        return cancionRepository.findByFechaCreación();
+    }
+
+
 }

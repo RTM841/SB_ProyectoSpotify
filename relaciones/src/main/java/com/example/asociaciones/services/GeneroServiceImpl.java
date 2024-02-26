@@ -1,11 +1,13 @@
 package com.example.asociaciones.services;
 
+import com.example.asociaciones.entity.Cancion;
 import com.example.asociaciones.entity.Genero;
 import com.example.asociaciones.repositories.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,4 +54,10 @@ public class GeneroServiceImpl implements GeneroService {
         productOptional.ifPresent( productDb -> generoRepository.delete(productDb));
         return productOptional;
     }
+
+    @Override
+    public int countByGeneroNombre(String Nombre) {
+        return generoRepository.countByGeneroNombre(Nombre);
+    }
+
 }

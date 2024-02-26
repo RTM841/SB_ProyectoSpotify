@@ -3,15 +3,17 @@ package com.example.asociaciones.controllers;
 import com.example.asociaciones.entity.Cancion;
 import com.example.asociaciones.services.CancionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.naming.NameNotFoundException;
+import java.util.*;
 
 
 @RestController
@@ -61,9 +63,51 @@ public class CancionControllers {
     public ResponseEntity<?> getUsersBetweenDates(@RequestParam("fechaIni") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIni,
                                                   @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
         List<Cancion> usuarios = cancionService.findByFechaCreaciónBetween(fechaIni, fechaFin);
-
-        // Aquí puedes devolver la lista de usuarios encontrados como respuesta
         return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<?> getCancionByNombre(@PathVariable String nombre){
+
+        try{
+            List<Cancion> canciones = cancionService.findCancionByNombre(nombre);
+            return ResponseEntity.ok(canciones);
+
+        }catch (EmptyResultDataAccessException e){
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+
+    }
+
+    @GetMapping("/genero/{Nombre}")
+    public ResponseEntity<?> getByGeneroNombre(@PathVariable String Nombre){
+
+        try{
+            List<Cancion> canciones = cancionService.findByGeneroNombre(Nombre);
+            return ResponseEntity.ok(canciones);
+
+        }catch (EmptyResultDataAccessException e){
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+
+    }
+
+    @GetMapping("/fechaReciente")
+    public ResponseEntity<?> getByFechaCreacion(){
+        try{
+            List<Cancion> canciones = cancionService.findByFechaCreación();
+            return ResponseEntity.ok(canciones);
+
+        }catch (EmptyResultDataAccessException e){
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+
     }
 
 }

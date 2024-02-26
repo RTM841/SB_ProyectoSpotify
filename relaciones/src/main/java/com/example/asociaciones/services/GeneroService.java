@@ -1,5 +1,6 @@
 package com.example.asociaciones.services;
 
+import com.example.asociaciones.entity.Cancion;
 import com.example.asociaciones.entity.Genero;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +24,7 @@ public interface GeneroService {
 
     //Borrar cancion
     Optional<Genero> delete(Long id);
+
+    //Buscar cuantas canciones tiene un género
+    int countByGeneroNombre(String Nombre);
 }

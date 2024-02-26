@@ -13,8 +13,10 @@ public interface CancionService {
     List<Cancion> findAll();
 
     //Buscar canciones entre dos fechas
-   List<Cancion> findByFechaCreaciónBetween(Date fechaIni, Date fechaFin);
+    List<Cancion> findByFechaCreaciónBetween(Date fechaIni, Date fechaFin);
 
+    //Buscar canción por nombre
+    List<Cancion> findCancionByNombre(String nombre);
     //Bsucar canción por Id
     Optional<Cancion> findById(Long id);
 
@@ -27,6 +29,10 @@ public interface CancionService {
     //Borrar cancion
     Optional<Cancion> delete(Long id);
 
+    //Bucar las canciones de un género
+    List<Cancion> findByGeneroNombre(String Nombre);
 
+    //Buscar canciones más recientes
+    List<Cancion> findByFechaCreación();
 
 }
