@@ -1,5 +1,6 @@
 package com.example.asociaciones.controllers;
 
+import com.example.asociaciones.entity.Cancion;
 import com.example.asociaciones.entity.Genero;
 import com.example.asociaciones.entity.Usuario;
 import com.example.asociaciones.services.UsuarioService;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -140,6 +142,48 @@ public class UsuarioController {
         Map<String, String> userResponse = new HashMap<>();
         userResponse.put("username", userDetails.getUsername());
         return ResponseEntity.ok(userResponse);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha actualizado de forma correcta el usuario",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))}),
+
+            @ApiResponse(responseCode = "403",
+                    description = "No se ha actualizado de forma correcta el usuario",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))})
+    })
+    @Operation(summary = "update", description = "Actualiza la usuario")
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario){
+        Optional<Usuario> productOptional = usuarioService.update(id, usuario);
+        if(productOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha borrado de forma correcta un usuario",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))}),
+
+            @ApiResponse(responseCode = "403",
+                    description = "No se ha borrado de forma correcta el usuario",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))})
+    })
+    @Operation(summary = "delete", description = "Borra un usuario")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Usuario> delete(@PathVariable Long id){
+        Optional<Usuario> productOptional = usuarioService.delete(id);
+        if(productOptional.isPresent()){
+            return ResponseEntity.ok(productOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
     }
 
 

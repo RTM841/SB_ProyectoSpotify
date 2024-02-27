@@ -1,5 +1,6 @@
 package com.example.asociaciones.services;
 
+import com.example.asociaciones.entity.Cancion;
 import com.example.asociaciones.entity.Rol;
 import com.example.asociaciones.entity.Usuario;
 import com.example.asociaciones.repositories.RoleRepository;
@@ -76,5 +77,25 @@ public class UsuarioServiceImpl implements UsuarioService{
                 true,
                 authorities);
 
+    }
+
+    @Override
+    @Transactional
+    public Optional<Usuario> update(Long id, Usuario usuario) {
+        Optional <Usuario> usuarioOptional = usuarioRepository.findById(id);
+        if(usuarioOptional.isPresent()){
+            Usuario usuarioDB = usuarioOptional.orElseThrow();
+            usuarioDB.setUsername(usuario.getUsername());
+            usuarioDB.setPassword(usuario.getPassword());
+            return Optional.of(usuarioRepository.save(usuarioDB));
+        }
+        return usuarioOptional;
+    }
+
+    @Override
+    public Optional<Usuario> delete(Long id) {
+        Optional <Usuario> usuarioOptional = usuarioRepository.findById(id);
+        usuarioOptional.ifPresent( usuarioDb -> usuarioRepository.delete(usuarioDb));
+        return usuarioOptional;
     }
 }
