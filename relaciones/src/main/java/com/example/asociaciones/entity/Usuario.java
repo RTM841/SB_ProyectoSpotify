@@ -1,6 +1,7 @@
 package com.example.asociaciones.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,15 +22,18 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(example = "1", description = "Es el identificador del usuario")
     private Long id;
 
     @Column( unique = true)
     @NotBlank
     @Size(min = 4, max = 16)
+    @Schema(example = "Estopa", description = "Es el nombre del usuario , puede ser el nombre normal del usuario o el del artista, todo depende del rol")
     private String username;
 
     @NotBlank
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Schema(example = "12345", description = "Es la contraseña que el usuario eliga")
     private String password;
 
     @ManyToMany

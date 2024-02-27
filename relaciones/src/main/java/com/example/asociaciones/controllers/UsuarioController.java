@@ -1,8 +1,17 @@
 package com.example.asociaciones.controllers;
 
+import com.example.asociaciones.entity.Genero;
 import com.example.asociaciones.entity.Usuario;
 import com.example.asociaciones.services.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +26,41 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "usuario", description = "Este es el controlador de usuarios como su nombre indica , aqui se haran las operaciones CRUD de usuarios")
 public class UsuarioController {
 
     @Autowired
     UsuarioService usuarioService;
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Deuelve una lista de los usuarios",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))}),
 
+            @ApiResponse(responseCode = "403",
+                    description = "Error cuando no se tiene permiso o se ejecutado mal el método",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))})
+    })
+    @Operation(summary = "findAll", description = "Devuelve la lista de los usuarios que hay")
     @GetMapping
     public List<Usuario> list(){
         return usuarioService.findAll();
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Creamos un usuario",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))}),
+
+            @ApiResponse(responseCode = "403",
+                    description = "Error cuando no se tiene permiso o se ejecutado mal el método",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))})
+    })
+    @Operation(summary = "create", description = "Acción mediante la cuál insertamos un usuario")
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result){
         if(result.hasFieldErrors()){
@@ -36,6 +69,23 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Nos resgistramos con el usuario",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))}),
+
+            @ApiResponse(responseCode = "403",
+                    description = "Error cuando no se tiene permiso o se ejecutado mal el método",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))}),
+
+            @ApiResponse(responseCode = "401",
+                    description = "Error cuando la contraseña o el usuario no cumplen con los requisitos",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))})
+    })
+    @Operation(summary = "resgister", description = "Para resgitrar a un usuario")
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody Usuario usuario, BindingResult result){
         return create(usuario, result);
@@ -43,6 +93,18 @@ public class UsuarioController {
 
 
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Para validar el token",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))}),
+
+            @ApiResponse(responseCode = "403",
+                    description = "Error cuando no se tiene permiso o se ejecutado mal el método",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))}),
+    })
+    @Operation(summary = "validation", description = "Es el método que nos valida el token")
     private ResponseEntity<?> validation(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
 
@@ -50,6 +112,18 @@ public class UsuarioController {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Nos devuelve el usuario mediante su nombre",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))}),
+
+            @ApiResponse(responseCode = "403",
+                    description = "Error cuando no se tiene permiso o se ejecutado mal el método",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Message.class)))})
+    })
+    @Operation(summary = "findUserByUsername", description = "Buscamos a un usuario para ver si existe mediante su nombre")
     @GetMapping("/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         UserDetails userDetails;

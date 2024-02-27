@@ -1,5 +1,6 @@
 package com.example.asociaciones.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -19,14 +20,18 @@ public class Cancion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(example = "1", description = "Es el identificador de la canción , numerico , autoincremental")
     private Long id;
 
+    @Schema(example = "25/8", description = "Es el título de la canció, alfabético")
     @NotBlank
     private String nombre;
 
+    @Schema(example = "2020-02-29", description = "Es la fecha de creación de la canción, tiene el formato yyyy-MM-DD")
     @Temporal(TemporalType.DATE)
     private Date fechaCreación;
 
+    @Schema(example = "Bad Bunny", description = "Se pone el nombre del artista principal, alfábetico")
     @NotBlank
     private String artistas;
 
