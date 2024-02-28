@@ -26,5 +26,5 @@ public interface GeneroService {
     Optional<Genero> delete(Long id);
 
     //Buscar cuantas canciones tiene un género
-    int countByGeneroNombre(String Nombre);
+    int countByGeneronombre(String nombre);
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.naming.NameNotFoundException;
+import java.nio.file.AccessDeniedException;
 import java.util.*;
 
 
@@ -148,7 +149,7 @@ public class CancionControllers {
         @GetMapping("/betweenDates")
         public ResponseEntity<?> getCancionBetweenDates(@RequestParam("fechaIni") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIni,
                                                       @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
-            List<Cancion> canciones = cancionService.findByFechaCreaciónBetween(fechaIni, fechaFin);
+            List<Cancion> canciones = cancionService.findByFechaCreacionBetween(fechaIni, fechaFin);
             return ResponseEntity.ok(canciones);
         }
 
@@ -168,7 +169,7 @@ public class CancionControllers {
         public ResponseEntity<?> getCancionByNombre(@PathVariable String nombre){
 
             try{
-                List<Cancion> canciones = cancionService.findCancionByNombre(nombre);
+                List<Cancion> canciones = cancionService.findCancionByPartialNombre(nombre);
                 return ResponseEntity.ok(canciones);
 
             }catch (EmptyResultDataAccessException e){
@@ -221,7 +222,7 @@ public class CancionControllers {
         @GetMapping("/fechaReciente")
         public ResponseEntity<?> getByFechaCreacion(){
             try{
-                List<Cancion> canciones = cancionService.findByFechaCreación();
+                List<Cancion> canciones = cancionService.findByFechaCreacion();
                 return ResponseEntity.ok(canciones);
 
             }catch (EmptyResultDataAccessException e){
@@ -231,6 +232,5 @@ public class CancionControllers {
             }
 
         }
-
 }
 

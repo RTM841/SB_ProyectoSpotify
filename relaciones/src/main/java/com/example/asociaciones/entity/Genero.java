@@ -5,10 +5,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ManyToAny;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "genero")
@@ -23,7 +19,7 @@ public class Genero {
     private Long id;
 
     @Schema(example = "Pop", description = "Es el nombre del género al que pertencen las canciones")
-    private String Nombre;
+    private String nombre;
 
 
 }

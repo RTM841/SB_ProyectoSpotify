@@ -21,15 +21,20 @@ public class CancionServiceImpl implements CancionService{
     public List<Cancion> findAll() {return cancionRepository.findAll();}
 
     @Override
-    public List<Cancion> findByFechaCreaciónBetween(Date fechaIni, Date fechaFin) {
-        return cancionRepository.findByFechaCreaciónBetween(fechaIni, fechaFin);
+    public List<Cancion> findByFechaCreacionBetween(Date fechaIni, Date fechaFin) {
+        return cancionRepository.findByFechaCreacionBetween(fechaIni, fechaFin);
     }
 
     @Override
-    public List<Cancion> findCancionByNombre(String nombre) {
-        return cancionRepository.findCancionByNombre(nombre);
-    }
+    public List<Cancion> findCancionByPartialNombre(String nombre) {
+        // Convertir el nombre a minúsculas para hacer la búsqueda no sensible a mayúsculas/minúsculas
+        nombre = nombre.toLowerCase();
 
+        // Realizar la búsqueda en la base de datos
+        List<Cancion> canciones = cancionRepository.findByNombreContainingIgnoreCase(nombre);
+
+        return canciones;
+    }
     @Override
     @Transactional(readOnly = true)
     public Optional<Cancion> findById(Long id) {return cancionRepository.findById(id);}
@@ -48,7 +53,7 @@ public class CancionServiceImpl implements CancionService{
         if(cancionOptional.isPresent()){
             Cancion cancionDb = cancionOptional.orElseThrow();
             cancionDb.setNombre(cancion.getNombre());
-            cancionDb.setFechaCreación(cancion.getFechaCreación());
+            cancionDb.setFechaCreacion(cancion.getFechaCreacion());
             cancionDb.setArtistas(cancion.getArtistas());
             return Optional.of(cancionRepository.save(cancionDb));
         }
@@ -67,8 +72,8 @@ public class CancionServiceImpl implements CancionService{
         return cancionRepository.findByGeneroNombre(Nombre);
     }
 
-    public List<Cancion> findByFechaCreación() {
-        return cancionRepository.findByFechaCreación();
+    public List<Cancion> findByFechaCreacion() {
+        return cancionRepository.findByFechaCreacion();
     }
 
 

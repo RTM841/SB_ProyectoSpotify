@@ -1,7 +1,6 @@
 package com.example.asociaciones.controllers;
 
 
-import com.example.asociaciones.entity.Cancion;
 import com.example.asociaciones.entity.Genero;
 import com.example.asociaciones.services.GeneroService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -146,10 +145,10 @@ public class GeneroControllers {
                             array = @ArraySchema(schema = @Schema(implementation = Message.class)))})
     })
     @Operation(summary = "countByGeneroNombre", description = "Nos devuelve un entero que es el número de canciones que tiene un género y buscamos el número mediante el nombre del mismo")
-    @GetMapping("/nombre/{Nombre}")
-    public ResponseEntity<Integer> view(@PathVariable String Nombre){
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<Integer> view(@PathVariable String nombre){
         try{
-            int numero = generoService.countByGeneroNombre(Nombre);
+            int numero = generoService.countByGeneronombre(nombre);
             return ResponseEntity.ok(numero);
 
         }catch (EmptyResultDataAccessException e){

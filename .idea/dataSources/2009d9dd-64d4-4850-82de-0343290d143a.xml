@@ -1162,7 +1162,7 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
       <CollationName>utf8_spanish_ci</CollationName>
     </schema>
     <schema id="331" parent="1" name="spring_data_jpa_spotify">
-      <LastIntrospectionLocalTimestamp>2024-02-24.17:21:37</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-02-28.09:15:24</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <schema id="332" parent="1" name="tarea6">
@@ -1246,11 +1246,11 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
       <Type>btree</Type>
     </index>
     <column id="353" parent="341" name="fecha_creación">
-      <DasType>datetime(6)|0s</DasType>
+      <DasType>date|0s</DasType>
       <Position>1</Position>
     </column>
     <column id="354" parent="341" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>7</AutoIncrement>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
@@ -1274,7 +1274,7 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="359" parent="342" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>5</AutoIncrement>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1360,7 +1360,7 @@ rol_id</ColNames>
       <Position>1</Position>
     </column>
     <column id="377" parent="345" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>8</AutoIncrement>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>

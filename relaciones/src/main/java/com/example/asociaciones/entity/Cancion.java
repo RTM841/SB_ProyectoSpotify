@@ -29,7 +29,7 @@ public class Cancion {
 
     @Schema(example = "2020-02-29", description = "Es la fecha de creación de la canción, tiene el formato yyyy-MM-DD")
     @Temporal(TemporalType.DATE)
-    private Date fechaCreación;
+    private Date fechaCreacion;
 
     @Schema(example = "Bad Bunny", description = "Se pone el nombre del artista principal, alfábetico")
     @NotBlank

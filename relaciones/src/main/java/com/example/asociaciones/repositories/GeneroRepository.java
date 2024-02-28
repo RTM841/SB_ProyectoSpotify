@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GeneroRepository  extends JpaRepository<Genero, Long> {
-    @Query("SELECT COUNT(c) FROM Cancion c JOIN c.generos g WHERE g.Nombre = :Nombre")
-    int countByGeneroNombre(String Nombre);
+    @Query("SELECT COUNT(c) FROM Cancion c JOIN c.generos g WHERE g.nombre = :nombre")
+    int countByGeneronombre(String nombre);
 
 }
