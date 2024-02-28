@@ -147,9 +147,12 @@ public class CancionControllers {
         })
         @Operation(summary = "findUserBeteenDates", description = "Devuelve una lista de canciones comprendidas entre dos fechas")
         @GetMapping("/betweenDates")
-        public ResponseEntity<?> getCancionBetweenDates(@RequestParam("fechaIni") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIni,
-                                                      @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
+        public ResponseEntity<?> getCancionBetweenDates(@RequestParam("fechaIni") @DateTimeFormat(pattern = "yyyy-MM-DD") Date fechaIni,
+                                                      @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-DD") Date fechaFin) {
             List<Cancion> canciones = cancionService.findByFechaCreacionBetween(fechaIni, fechaFin);
+            if(canciones.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado ninguna cancion");
+            }
             return ResponseEntity.ok(canciones);
         }
 
@@ -170,7 +173,12 @@ public class CancionControllers {
 
             try{
                 List<Cancion> canciones = cancionService.findCancionByPartialNombre(nombre);
-                return ResponseEntity.ok(canciones);
+                if(canciones.isEmpty()){
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado ninguna cancion con este nombre: " + nombre);
+                }else {
+                    return ResponseEntity.ok(canciones);
+                }
+
 
             }catch (EmptyResultDataAccessException e){
                 Map<String, String> errorResponse = new HashMap<>();
