@@ -60,12 +60,12 @@ public class GeneroControllers {
     })
     @Operation(summary = "findAll", description = "Devuelve una lista de los generos buscando los mismo mediante el id")
     @GetMapping("/{id}")
-    public ResponseEntity<Genero> view(@PathVariable Long id){
+    public ResponseEntity<?> view(@PathVariable Long id){
         Optional<Genero> productOptional = generoService.findById(id);
         if(productOptional.isPresent()){
             return ResponseEntity.ok(productOptional.orElseThrow());
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado ningún género con este id ");
     }
 
 

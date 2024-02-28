@@ -63,12 +63,12 @@ public class CancionControllers {
         })
         @Operation(summary = "vista", description = "Devuelve una lista de las canciones por su id")
         @GetMapping("/{id}")
-        public ResponseEntity<Cancion> view(@PathVariable Long id){
+        public ResponseEntity<?> view(@PathVariable Long id){
             Optional<Cancion> productOptional = cancionService.findById(id);
             if(productOptional.isPresent()){
                 return ResponseEntity.ok(productOptional.orElseThrow());
             }
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado ninguna cancion con ese Id");
         }
 
 
@@ -210,7 +210,7 @@ public class CancionControllers {
             }catch (EmptyResultDataAccessException e){
                 Map<String, String> errorResponse = new HashMap<>();
                 errorResponse.put("error", e.getMessage());
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado un género con este nombre");
             }
 
         }
@@ -236,7 +236,7 @@ public class CancionControllers {
             }catch (EmptyResultDataAccessException e){
                 Map<String, String> errorResponse = new HashMap<>();
                 errorResponse.put("error", e.getMessage());
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado ninguna cancion");
             }
 
         }

@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -134,7 +135,7 @@ public class UsuarioController {
         } catch (UsernameNotFoundException e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe ningún usuario con ese nombre");
         }
 
         // Aquí puedes devolver los detalles del usuario como una respuesta
@@ -178,12 +179,19 @@ public class UsuarioController {
     })
     @Operation(summary = "delete", description = "Borra un usuario")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> delete(@PathVariable Long id){
-        Optional<Usuario> productOptional = usuarioService.delete(id);
-        if(productOptional.isPresent()){
-            return ResponseEntity.ok(productOptional.orElseThrow());
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        try{
+            Optional<Usuario> productOptional = usuarioService.delete(id);
+            if(productOptional.isPresent()){
+                return ResponseEntity.ok(productOptional.orElseThrow());
+            }
+            //return ResponseEntity.notFound().build();
+        }catch (EmptyResultDataAccessException e){
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra el usuario");
         }
-        return ResponseEntity.notFound().build();
+        return null;
     }
 
 
